@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Program {
     public static void main(String[] args) {
-        readTextFile("/Users/olegmonogarov/GeekBrains_/java/java-core/6_test.txt");
+        readTextFile("/Users/olegmonogarov/GeekBrains_/java/java-core/6_test.txt", true);
 //        try {
 //            int[] nums = new int[3];
 //            nums[3] = 57;
@@ -19,13 +19,18 @@ public class Program {
 //        }
 
     }
-    public static void readTextFile(String fileName)  {
+
+    public static void readTextFile(String fileName, boolean f) {
+        FileReader fileReader = null;
         try {
-            FileReader fileReader = new FileReader(fileName);
+            fileReader = new FileReader(fileName);
             char[] buf = new char[256];
             int c;
             while ((c = fileReader.read(buf)) > 0) {
-                if (c < 256){
+                if (f) {
+                    throw new Exception("Неожиданное исключение ");
+                }
+                if (c < 256) {
                     buf = Arrays.copyOf(buf, c);
                 }
                 for (char c1 : buf) {
@@ -35,12 +40,21 @@ public class Program {
 
             }
             fileReader.close();
-        }
-        catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("* Сложности при открытии файла *");
-        }
-        catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("* Сложности при обработке файла *");
+
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        } finally {
+            try {
+                if (fileReader != null) {
+                    fileReader.close();
+                }
+            } catch (IOException e) {
+
+            }
 
         }
     }
