@@ -4,10 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Program {
     public static void main(String[] args) {
-        readTextFile("/Users/olegmonogarov/GeekBrains_/java/java-core/6_test.txt", true);
+//        readTextFile("/Users/olegmonogarov/GeekBrains_/java/java-core/6_test.txt", true);
 //        try {
 //            int[] nums = new int[3];
 //            nums[3] = 57;
@@ -17,6 +18,32 @@ public class Program {
 //            ex.toString();
 ////            ex.printStackTrace();
 //        }
+        Animal cat = new Cat("Кити", 2000);
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            int j = random.nextInt(2);
+            try {
+                switch (j) {
+                    case 0:
+                        cat.swim(i * 10);
+                        break;
+                    case 1:
+                        cat.run(i * 10);
+                        System.out.printf("Кошка пробежала дистанцию %s\n", i * 10);
+                        break;
+                }
+            } catch (AnimalRunException ex) {
+                System.out.printf("Ошибка при попытке животного %s пробежать дистанцию %d\n %s\n",
+                        ex.getName(), ex.getDistance(), ex.getMessage());
+
+            } catch (AnimalSwimException ex) {
+                System.out.printf("Ошибка при попытке животного %s проплыть %d\n %s\n",
+                        ex.getName(), ex.getDistance(), ex.getMessage());
+
+            }
+
+        }
+
 
     }
 
